@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Object_Interact : MonoBehaviour
+public class Object_Interact : MonoBehaviourPunCallbacks, IPunObservable
 {
     public Color classicColor = Color.white;
     public Color colorInteract = Color.blue;
@@ -11,20 +13,44 @@ public class Object_Interact : MonoBehaviour
 
     private int countFrame = 1;
     private SpriteRenderer spriteRenderer;
+    private PhotonView photonView;
 
-    public void ActiveInteract()
+    public void ActiveInteract(PhotonView player)
     {
+        ChangeOwner(player);
         isInteract = true;
         countFrame = 0;
     }
 
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(isInteract);
+          
+        }
+        else
+        {
+            this.isInteract = (bool)stream.ReceiveNext();
+          
+        }
+    }
+
+    #endregion
+
+
     public virtual void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        photonView = this.GetComponent<PhotonView>();
+        spriteRenderer.color = classicColor;
     }
 
     public virtual void Update()
     {
+        Debug.Log("Interact = " + isInteract);
         if (isInteract)
         {
             spriteRenderer.color = colorInteract;
@@ -38,10 +64,28 @@ public class Object_Interact : MonoBehaviour
 
     public virtual void LateUpdate()
     {
-        countFrame++;
-        if (countFrame > resetFrame)
+        if (photonView.Owner == null)
         {
-            isInteract = false;
+
+            countFrame++;
+            if (countFrame > resetFrame)
+            {
+                isInteract = false;
+            }
         }
+    }
+
+    public void ChangeOwner(PhotonView player)
+    {
+        if (photonView.Owner != player.Owner)
+        {
+            photonView.TransferOwnership(player.Owner);
+        }
+
+    }
+
+    public void ResetOwner()
+    {
+        photonView.TransferOwnership(0);
     }
 }

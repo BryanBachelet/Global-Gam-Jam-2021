@@ -22,6 +22,7 @@ public class PlayerInteraction : MonoBehaviourPun
     private Vector3 dectecPosition;
 
     private Collider2D objectTarget;
+
     #endregion
 
 
@@ -38,9 +39,10 @@ public class PlayerInteraction : MonoBehaviourPun
 
                 float dotElement = 10f;
 
+                Collider2D targert = null;
                 foreach (Collider2D element in collider2Ds)
                 {
-                   
+
                     float h = Input.GetAxis("Horizontal");
                     float v = Input.GetAxis("Vertical");
                     Vector3 dir = new Vector3(h, v, 0);
@@ -50,16 +52,37 @@ public class PlayerInteraction : MonoBehaviourPun
                     if (newDot < dotElement)
                     {
                         dotElement = newDot;
-                        objectTarget = element;
+                        targert = element;
                     }
                 }
 
-                objectTarget.GetComponent<Object_Interact>().ActiveInteract();
+                Debug.Log(targert + " Target");
+                Debug.Log(objectTarget + " Object");
+
+                if (targert != null)
+                {
+
+
+                    if (targert != objectTarget && objectTarget != null)
+                    {
+                       
+                        objectTarget.GetComponent<Object_Interact>().ResetOwner();
+                        objectTarget = null;
+                    }
+                    objectTarget = targert;
+                    objectTarget.GetComponent<Object_Interact>().ActiveInteract(photonView);
+                }
 
             }
             else
             {
-                objectTarget = null;
+                if (objectTarget != null)
+                {
+
+                    objectTarget.GetComponent<Object_Interact>().ResetOwner();
+                    
+                    objectTarget = null;
+                }
             }
 
         }

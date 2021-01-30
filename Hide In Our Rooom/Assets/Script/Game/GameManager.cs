@@ -32,7 +32,7 @@ namespace GuerhoubaGame
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManager.GetActiveScene().name);
 
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(PhotonNetwork.CountOfPlayers, 0f, 0f), Quaternion.identity, 0);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace GuerhoubaGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-                LoadArena();
+               // LoadArena();
             }
         }
 
@@ -64,7 +64,7 @@ namespace GuerhoubaGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-                LoadArena();
+               // LoadArena();
             }
         }
 
