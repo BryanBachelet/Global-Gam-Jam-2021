@@ -1,21 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMouvement : MonoBehaviour
+public class PlayerMouvement : MonoBehaviourPun
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float mouvementSpeed = 1f;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (photonView.IsMine || !PhotonNetwork.IsConnected)
         {
-            transform.position += transform.up;
+            // Mouvement Part 
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+
+            transform.position += new Vector3(1, 1, 0) * v * mouvementSpeed * Time.deltaTime + new Vector3(1, -1) * h * mouvementSpeed * Time.deltaTime;
         }
+
     }
 }

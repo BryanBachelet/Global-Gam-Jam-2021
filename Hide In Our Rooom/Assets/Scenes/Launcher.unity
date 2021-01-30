@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab41ca86f1570e44584597470f71d2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayersPerRoom: 4
+  maxPlayersPerRoom: 2
   controlPanel: {fileID: 473293590}
   progressPanel: {fileID: 1088444093}
   isConnecting: 0
