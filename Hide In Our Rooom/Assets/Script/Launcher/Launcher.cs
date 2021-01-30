@@ -25,16 +25,33 @@ namespace GuerhoubaGame
         [SerializeField]
         private GameObject progressPanel;
 
+        [Header("Wait Room")]
+        [SerializeField]
+        private GameObject waitRoom;
+
+        [SerializeField]
+        private GameObject Wr_Player_One;
+
+        [SerializeField]
+        private GameObject Wr_Player_Two;
+
 
         #endregion
 
         #region Private Fields
 
         private string gameVersion = "1";
-        [SerializeField]
+
         private bool isConnecting;
 
+
+        [SerializeField]
+        private bool launch;
+
         #endregion
+
+
+
 
         #region MonoBehavior CallBack
 
@@ -48,7 +65,9 @@ namespace GuerhoubaGame
         {
             progressPanel.SetActive(false);
             controlPanel.SetActive(true);
+            waitRoom.SetActive(false);
         }
+        
 
         #endregion
 
@@ -59,7 +78,7 @@ namespace GuerhoubaGame
             Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
             if (isConnecting)
             {
-               
+
                 PhotonNetwork.JoinRandomRoom();
                 isConnecting = false;
             }
@@ -85,13 +104,17 @@ namespace GuerhoubaGame
         {
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 0)
             {
-               
+                progressPanel.SetActive(false);
+                controlPanel.SetActive(false);
+                waitRoom.SetActive(true);
                 Debug.Log("We load the 'Room for 1'");
-                PhotonNetwork.LoadLevel("GameScene");
+
             }
         }
+
+
 
         #endregion
 
@@ -100,7 +123,7 @@ namespace GuerhoubaGame
 
         public void Connect()
         {
-            
+
             progressPanel.SetActive(true);
             controlPanel.SetActive(false);
             if (PhotonNetwork.IsConnected)
@@ -114,6 +137,20 @@ namespace GuerhoubaGame
             }
 
         }
+
+        public void LauchGame()
+        {
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("GameScene");
+                }
+            }
+        }
+
+      
+
         #endregion
     }
 }
