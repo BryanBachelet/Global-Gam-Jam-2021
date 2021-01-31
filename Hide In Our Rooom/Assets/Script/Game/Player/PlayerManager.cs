@@ -61,7 +61,8 @@ namespace GuerhoubaGame
                 PlayerManager.LocalPlayerInstance = this.gameObject;
             }
             DontDestroyOnLoad(this.gameObject);
-
+            GameScore gameScore = GameScore.gameScore;
+            gameScore.GetPlayerScore(this.gameObject,0);
            
         }
 

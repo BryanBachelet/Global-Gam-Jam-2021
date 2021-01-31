@@ -19,11 +19,13 @@ namespace GuerhoubaGame
         [Tooltip("The prefab to use  for representing the player")]
         public GameObject playerPrefab;
 
-
+        private GameScore gameScore;
+        private int playerSpawn;
 
         private void Start()
         {
             gameManager = this;
+            gameScore = this.GetComponent<GameScore>();
             if (playerPrefab == null)
             {
                 Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'", this);
@@ -32,7 +34,9 @@ namespace GuerhoubaGame
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManager.GetActiveScene().name);
 
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(PhotonNetwork.CountOfPlayers, 0f, 0f), Quaternion.identity, 0);
+                GameObject play = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(PhotonNetwork.CountOfPlayers, 0f, 0f), Quaternion.identity, 0);
+              
+
             }
             else
             {
@@ -54,7 +58,7 @@ namespace GuerhoubaGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-               // LoadArena();
+                // LoadArena();
             }
         }
 
@@ -64,7 +68,7 @@ namespace GuerhoubaGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-               // LoadArena();
+                // LoadArena();
             }
         }
 
