@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{603d8550-1d89-4790-8469-a0109ee94a59}">
+		<property name="assetPath">
+			<value>boxfalldown.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.52244897959183678</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{3af8135e-21d0-4ff3-8416-c10f15170b5d}</destination>
+		</relationship>
+	</object>
+</objects>

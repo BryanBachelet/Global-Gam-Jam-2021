@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{d3a3a575-9f1c-4f65-8cbc-f38dbbfce3a8}">
+		<property name="assetPath">
+			<value>PaperCrumble.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.9969160997732427</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{3af8135e-21d0-4ff3-8416-c10f15170b5d}</destination>
+		</relationship>
+	</object>
+</objects>
